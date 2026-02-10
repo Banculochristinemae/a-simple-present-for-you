@@ -1,0 +1,175 @@
+:root {
+    --primary-pink: #fce4ec;
+    --text-color: #d81b60;
+    --tulip-color: #ff4081; 
+    --pot-color: #a1665e;
+    --pot-rim: #8d554c;
+    --env-color: #f48fb1;
+    --env-flap: #f06292;
+    --env-front: #f8bbd0;
+}
+
+body {
+    background-color: var(--primary-pink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- Screens --- */
+#setup-screen, #envelope-screen, #reveal-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#setup-screen { 
+    display: flex; 
+    text-align: center; 
+    background: white; 
+    padding: 30px; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+}
+
+input { padding: 12px; border-radius: 10px; border: 2px solid #ff80ab; margin-bottom: 15px; width: 200px; outline: none; }
+button { background-color: #ff4081; color: white; border: none; padding: 10px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+
+.instruction-text { color: #d81b60; margin-bottom: 30px; text-align: center; }
+
+/* --- Envelope Logic --- */
+.envelope-container {
+    position: relative;
+    width: 280px;
+    height: 200px;
+    cursor: pointer;
+    background-color: var(--env-color);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.flap {
+    position: absolute; top: 0; left: 0; width: 0; height: 0;
+    border-left: 140px solid transparent; border-right: 140px solid transparent;
+    border-top: 110px solid var(--env-flap);
+    transform-origin: top; transition: transform 0.6s ease; z-index: 4;
+}
+
+.envelope-front {
+    position: absolute; bottom: 0; left: 0; width: 0; height: 0;
+    border-left: 140px solid transparent; border-right: 140px solid transparent;
+    border-bottom: 110px solid var(--env-front); z-index: 3;
+}
+
+.polaroid-mini {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    background: white;
+    padding: 10px 10px 25px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+    opacity: 0;
+}
+.polaroid-mini img { width: 100%; height: 140px; object-fit: cover; }
+
+.heart-icon {
+    position: absolute; bottom: 85px; left: 50%; 
+    transform: translateX(-50%); font-size: 35px; 
+    z-index: 10; pointer-events: none;
+}
+
+.envelope-container.open .flap { transform: rotateX(180deg); z-index: 1; }
+
+/* Desktop polaroid fly-out */
+.envelope-container.open .polaroid-mini {
+    opacity: 1;
+    bottom: 420px;
+    left: -40%;
+    transform: scale(1.8) rotate(-10deg);
+    z-index: 100;
+}
+
+/* --- Reveal Layout (Desktop) --- */
+#reveal-screen {
+    width: 95%;
+    max-width: 1100px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.left-side { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.custom-message { color: var(--text-color); font-style: italic; text-align: center; margin-bottom: 30px; font-size: 1.3rem; min-height: 60px; padding: 0 20px; }
+
+.polaroid {
+    background: white;
+    padding: 15px 15px 50px 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transform: rotate(-2deg);
+    position: relative;
+    animation: attach 1.2s ease-out forwards;
+}
+
+@keyframes attach {
+    0% { transform: scale(1.3) rotate(-15deg); opacity: 0; }
+    100% { transform: scale(1) rotate(-2deg); opacity: 1; }
+}
+
+.polaroid img { width: 250px; height: 250px; object-fit: cover; display: block; }
+.pin { width: 18px; height: 18px; background: #ff1744; border-radius: 50%; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); z-index: 10; }
+
+/* --- Tulip and Flower Pot --- */
+.right-side { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 450px; }
+.flower-pot-container { position: relative; display: flex; flex-direction: column; align-items: center; }
+
+.tulip {
+    position: relative; width: 100px; height: 100px; margin-bottom: -5px; z-index: 2;
+    animation: sway 3s ease-in-out infinite; transform-origin: bottom center;
+}
+
+.petal { position: absolute; bottom: 0; border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%; background: var(--tulip-color); box-shadow: inset 0 0 20px rgba(0,0,0,0.15); }
+.petal-main { width: 80px; height: 100px; left: 10px; z-index: 2; }
+.petal-left { width: 70px; height: 90px; left: -10px; transform: rotate(-25deg); z-index: 1; }
+.petal-right { width: 70px; height: 90px; right: -10px; transform: rotate(25deg); z-index: 1; }
+
+.stem { width: 8px; height: 150px; background: #4caf50; border-radius: 4px; position: relative; z-index: 1; }
+
+/* Original Leaf Settings */
+.leaf { position: absolute; width: 45px; height: 65px; background: #66bb6a; z-index: 1; }
+.leaf-left { border-radius: 0 100% 10% 100%; bottom: 45px; left: -38px; transform: rotate(-15deg); transform-origin: bottom right; }
+.leaf-right { border-radius: 100% 0 100% 10%; bottom: 65px; right: -38px; transform: rotate(15deg); transform-origin: bottom left; }
+
+.pot { width: 120px; height: 90px; background: var(--pot-color); clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%); margin-top: -10px; z-index: 3; }
+.pot-rim { width: 135px; height: 20px; background: var(--pot-rim); border-radius: 5px; z-index: 4; }
+
+#greeting { color: #d81b60; margin-top: 20px; }
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    body { overflow-y: auto; height: auto; min-height: 100vh; padding: 20px 0; }
+    #reveal-screen { flex-direction: column-reverse; height: auto; gap: 30px; }
+    .right-side { height: auto; margin-bottom: 20px; }
+    .left-side { width: 100%; }
+    .envelope-container.open .polaroid-mini {
+        bottom: 120px;
+        left: 50%;
+        transform: translateX(-50%) scale(1.3);
+    }
+}
+
+@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.heart-particle { position: absolute; pointer-events: none; animation: floatUp 3s forwards; z-index: 100; }
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0); opacity: 0; }
+    100% { transform: translateY(-100vh) translateX(40px); opacity: 0; }
+}

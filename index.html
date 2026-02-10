@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Valentine's gift for you</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div id="setup-screen">
+        <h2>Enter Your Name</h2>
+        <input type="text" id="userName" placeholder="Type here...">
+        <button onclick="startApp()">Enter</button>
+    </div>
+
+    <div id="envelope-screen">
+        <h2 class="instruction-text">Click the envelope to unlock your present</h2>
+        <div class="envelope-container" onclick="animateEnvelope()">
+            <div class="flap"></div>
+            <div class="envelope-front"></div>
+            <div class="polaroid-mini">
+                <img id="miniImg" src="" alt="preview">
+            </div>
+            <div class="heart-icon">❤️</div>
+        </div>
+    </div>
+
+    <div id="reveal-screen">
+        <div class="left-side">
+            <div class="custom-message" id="displayMessage"></div>
+            <div class="polaroid">
+                <div class="pin"></div>
+                <img id="displayImg" src="" alt="Photo">
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="flower-pot-container">
+                <div class="tulip">
+                    <div class="petal petal-left"></div>
+                    <div class="petal petal-main"></div>
+                    <div class="petal petal-right"></div>
+                </div>
+                <div class="stem">
+                    <div class="leaf leaf-left"></div>
+                    <div class="leaf leaf-right"></div>
+                </div>
+                <div class="pot-rim"></div>
+                <div class="pot"></div>
+            </div>
+            <h1 id="greeting"></h1>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
